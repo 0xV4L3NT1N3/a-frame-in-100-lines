@@ -37,6 +37,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
   // generate image 
 
   const price = gasPrice.result.ProposeGasPrice + " Gwei"
+  const block = gasPrice.result.LastBlock
 
   const svg = await satori(
     <div
@@ -76,7 +77,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // save and reference file locally
 
-  fs.writeFileSync('./public/mas.png', pngBuffer)
+  fs.writeFileSync(`./public/${block}.png`, pngBuffer)
 
   // return next frame
 
@@ -90,7 +91,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         }
       ],
       image: {
-        src: `https://goshawk-accurate-greatly.ngrok-free.app/mas.png`,
+        src: `${NEXT_PUBLIC_URL}/${block}.png`,
         aspectRatio: '1:1',
       },
       postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
