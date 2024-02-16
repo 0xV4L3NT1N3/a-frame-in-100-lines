@@ -7,7 +7,7 @@ const frameMetadata = getFrameMetadata({
   // cover image 
 
   image: {
-    src: `https://zizzamia.xyz/park-3.png`,
+    src: `${NEXT_PUBLIC_URL}/cover.png`,
     aspectRatio: '1:1',
   },
 
@@ -15,7 +15,7 @@ const frameMetadata = getFrameMetadata({
 
   buttons: [
     {
-      label: 'Time to Swap ? 🔍',
+      label: 'Scan 🔍',
     },
   ],
 

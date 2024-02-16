@@ -2,6 +2,7 @@ import { FrameRequest, getFrameMessage, getFrameHtmlResponse } from '@coinbase/o
 import { NextRequest, NextResponse } from 'next/server';
 import { NEXT_PUBLIC_URL } from '../../config';
 import satori from 'satori'
+import sharp from 'sharp';
 import { join } from 'path';
 import * as fs from "fs";
 
@@ -9,7 +10,7 @@ const fontPath = join(process.cwd(), 'Roboto-Regular.ttf')
 let fontData = fs.readFileSync(fontPath)
 
 async function getResponse(req: NextRequest): Promise<NextResponse> {
- 
+
   // validate & decode frame message
 
   const body: FrameRequest = await req.json();
@@ -19,7 +20,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   let accountAddress: string | undefined = '';
   let text: string | undefined = '';
-  
+
   if (isValid) {
     accountAddress = message.interactor.verified_accounts[0];
   }
@@ -35,11 +36,27 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // generate image 
 
+  const price = gasPrice.result.ProposeGasPrice + " Gwei"
+
   const svg = await satori(
-    <div style={{ color: 'black' }}>hello, world</div>,
+    <div
+      style={{
+        height: '100%',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#fff',
+        fontSize: 52,
+        fontWeight: 600,
+      }}
+    >
+      <div style={{ marginTop: 40 }}>{price}</div>
+    </div>,
     {
-      width: 600,
-      height: 400,
+      width: 800,
+      height: 800,
       fonts: [
         {
           name: 'Roboto',
@@ -50,6 +67,16 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       ],
     },
   )
+
+  // convert svg to png
+
+  const pngBuffer = await sharp(Buffer.from(svg))
+    .toFormat('png')
+    .toBuffer();
+
+  // save and reference file locally
+
+  fs.writeFileSync('./public/mas.png', pngBuffer)
 
   // return next frame
 
@@ -63,7 +90,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         }
       ],
       image: {
-        src: `https://zizzamia.xyz/park-1.png`,
+        src: `https://goshawk-accurate-greatly.ngrok-free.app/mas.png`,
+        aspectRatio: '1:1',
       },
       postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
     }),
