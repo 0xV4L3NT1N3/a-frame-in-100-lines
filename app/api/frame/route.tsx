@@ -49,10 +49,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#fff',
-        fontSize: 52,
+        fontSize: 80,
         fontWeight: 600,
       }}
     >
+      <img src="https://etherscan.io/images/smile2.png" height={50}/>
       <div style={{ marginTop: 40 }}>{price}</div>
     </div>,
     {
