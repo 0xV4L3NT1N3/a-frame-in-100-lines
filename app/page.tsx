@@ -3,29 +3,29 @@ import type { Metadata } from 'next';
 import { NEXT_PUBLIC_URL } from './config';
 
 const frameMetadata = getFrameMetadata({
-  buttons: [
-    {
-      label: 'Story time!',
-    },
-    {
-      action: 'link',
-      label: 'Link to Google',
-      target: 'https://www.google.com',
-    },
-    {
-      label: 'Redirect to pictures',
-      action: 'post_redirect',
-    },
-  ],
+
+  // cover image 
+
   image: {
-    src: `${NEXT_PUBLIC_URL}/park-3.png`,
+    src: `https://zizzamia.xyz/park-3.png`,
     aspectRatio: '1:1',
   },
-  input: {
-    text: 'Tell me a boat story',
-  },
+
+  // list available buttons
+
+  buttons: [
+    {
+      label: 'Time to Swap ? 🔍',
+    },
+  ],
+
+  // post url to call
+  
   postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
+
 });
+
+// no fucking clue where this appears
 
 export const metadata: Metadata = {
   title: 'zizzamia.xyz',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'zizzamia.xyz',
     description: 'LFG',
-    images: [`${NEXT_PUBLIC_URL}/park-1.png`],
+    images: [`https://zizzamia.xyz/park-1.png`],
   },
   other: {
     ...frameMetadata,
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <h1>zizzamia.xyz</h1>
+      <h1>Don't open this via a browser you silly goose, use Warpcast</h1>
     </>
   );
 }
