@@ -76,9 +76,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     .toFormat('png')
     .toBuffer();
 
-  // save and reference file locally
-
-  fs.writeFileSync(`./public/${block}.png`, pngBuffer)
+  const png64 = pngBuffer.toString('base64')
 
   // return next frame
 
@@ -92,14 +90,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         }
       ],
       image: {
-        src: `${NEXT_PUBLIC_URL}/${block}.png`,
+        src: `data:image/png;base64,${png64}`,
         aspectRatio: '1:1',
       },
       postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
     }),
   );
-
-  nextFrame.headers.set("ngrok-skip-browser-warning", "true")
 
   return nextFrame
 
