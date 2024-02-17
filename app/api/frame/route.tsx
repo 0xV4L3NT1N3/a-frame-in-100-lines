@@ -53,7 +53,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         fontWeight: 600,
       }}
     >
-      <img src="https://etherscan.io/images/smile2.png" height={50}/>
+      <img src="https://etherscan.io/images/smile2.png" height={50} />
       <div style={{ marginTop: 40 }}>{price}</div>
     </div>,
     {
@@ -82,7 +82,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
   // return next frame
 
-  return new NextResponse(
+  const nextFrame = new NextResponse(
     getFrameHtmlResponse({
       buttons: [
         {
@@ -98,6 +98,11 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       postUrl: `${NEXT_PUBLIC_URL}/api/frame`,
     }),
   );
+
+  nextFrame.headers.set("ngrok-skip-browser-warning", "true")
+
+  return nextFrame
+
 }
 
 export async function POST(req: NextRequest): Promise<Response> {
