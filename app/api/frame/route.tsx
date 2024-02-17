@@ -53,7 +53,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         fontWeight: 600,
       }}
     >
-      <img src="https://etherscan.io/images/smile2.png" height={50} />
+      <img src="https://etherscan.io/images/smile2.png" height={50} width={50} />
       <div style={{ marginTop: 40 }}>{price}</div>
     </div>,
     {
